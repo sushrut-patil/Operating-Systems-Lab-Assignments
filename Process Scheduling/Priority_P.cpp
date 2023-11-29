@@ -2,16 +2,16 @@
 #include "Process.h"
 using namespace std;
 
-void PriorityNP(vector<Process> processes, int n)
+void PriorityP(vector<Process> processes, int n,int Total_Exetime)
 {
-    int time = 0, k = 0,processexe = 0;
+    int k = 0,processexe = 0;
     string Exe;
 
-    sort(processes.begin(), processes.end(), SortByArrival);
+    sort(processes.begin(), processes.end(), SortByArrival); 
     vector<Process *> ReadyQueue;
 
-    while(processexe < n)
-    {
+    for (int time = 0;time < Total_Exetime ; time++)
+    {   
         while (k < n)
         {
             if (processes[k].arrival_time > time)
@@ -23,22 +23,24 @@ void PriorityNP(vector<Process> processes, int n)
         }
         if (ReadyQueue.empty())
         {
-            time++;
+            Total_Exetime++;
             continue;
         }
         sort(ReadyQueue.begin(), ReadyQueue.end(), SortByPriority);
+        Process *j = ReadyQueue.front();
+        j->remaining_time--;
 
-        Process *i = ReadyQueue.front();
-        time += i->burst_time;
-        i->finish_time = time;
-        i->turnaround_time = i->finish_time - i->arrival_time;
-        i->waiting_time = i->turnaround_time - i->burst_time;
-        Exe += "P" + to_string(i->id) + " ";
-        processexe++;
-        ReadyQueue.erase(ReadyQueue.begin());
+        if (j->remaining_time == 0)
+        {
+            j->finish_time = time+1;
+            j->turnaround_time = j->finish_time - j->arrival_time;
+            j->waiting_time = j->turnaround_time - j->burst_time;
+            Exe += "P" + to_string(j->id) + " ";
+            processexe++;
+            ReadyQueue.erase(ReadyQueue.begin());
+        }
     }
-
-    cout << "\nPriority-NP Execution Order: " << Exe << "\n";
+    cout << "\nPriority-P Execution Order: " << Exe << "\n";
     sort(processes.begin(), processes.end(), SortByProcessId);
     cout << "Process\tFinish Time\tTurnaround Time\tWaiting Time\n";
     for (auto &i : processes)
