@@ -3,7 +3,7 @@
 class Process
 {
 public:
-    int id, arrival_time, burst_time;
+    int id, priority, arrival_time, burst_time;
     int finish_time, turnaround_time, waiting_time;
 };
 
@@ -21,5 +21,14 @@ inline bool SortByProcessId(const Process &p1, const Process &p2)
 
 inline bool SortByShortTime(const Process* p1 , const Process* p2)
 {
-    return p1->burst_time < p2->burst_time;
+    if (p1->burst_time != p2->burst_time)
+        return p1->burst_time < p2->burst_time;
+    return p1->id < p2->id;
+}
+
+inline bool SortByPriority(const Process* p1 , const Process* p2)
+{
+    if (p1->priority != p2->priority)
+        return p1->priority < p2->priority;
+    return p1->id < p2->id;
 }

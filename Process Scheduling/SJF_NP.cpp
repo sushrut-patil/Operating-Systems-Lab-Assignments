@@ -2,17 +2,16 @@
 #include "Process.h"
 using namespace std;
 
-
 void SJFNP(vector<Process> processes, int n)
 {
-    int time = 0,k = 0;
+    int time = 0, k = 0;
     string Exe;
 
     sort(processes.begin(), processes.end(), SortByArrival);
-    vector<Process*> ReadyQueue;
+    vector<Process *> ReadyQueue;
 
     for (int j = 0; j < n; j++)
-    {   
+    {
         /* The code snippet is a while loop that iterates through the remaining processes and adds them
         to the ReadyQueue if their arrival time is less than or equal to the current time. */
         while (k < n)
@@ -24,9 +23,9 @@ void SJFNP(vector<Process> processes, int n)
             ReadyQueue.push_back(&processes[k]);
             k++;
         }
-        sort(ReadyQueue.begin(),ReadyQueue.end(),SortByShortTime);
+        sort(ReadyQueue.begin(), ReadyQueue.end(), SortByShortTime);
 
-        Process* i = ReadyQueue.front();
+        Process *i = ReadyQueue.front();
         time += i->burst_time;
         i->finish_time = time;
         i->turnaround_time = i->finish_time - i->arrival_time;
@@ -43,6 +42,4 @@ void SJFNP(vector<Process> processes, int n)
         cout << i.id << "\t" << i.finish_time << "\t\t"
              << i.turnaround_time << "\t\t" << i.waiting_time << endl;
     }
-
 }
-
