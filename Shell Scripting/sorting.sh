@@ -25,4 +25,3 @@ do
 done
 echo "Sorted Array : "
 echo ${arr[*]}
-
