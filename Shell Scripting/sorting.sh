@@ -3,11 +3,11 @@
 #program to sort elements of array
 
 read -p "Enter Number of Elements in Array : " N
-array=()
+arr=()
 for i in $(seq 1 $N)
 do
 	read -p "Enter ${i} Number :" num
-	array+=($num)
+	arr+=($num)
 done
 
 for ((i = 0;i<$N;i++))
@@ -16,12 +16,13 @@ do
 	do
 		if [ ${arr[j]} -gt ${arr[$((j+1))]} ]
 		then
-			temp=${array[$j]}
-			array[$j]=${array[$((j + 1))]}
-			array[$((j + 1))]=$temp
+			temp=${arr[j]}
+            arr[$j]=${arr[$((j+1))]}  
+            arr[$((j+1))]=$temp
+			echo $temp
 		fi
 	done
 done
 echo "Sorted Array : "
-echo ${array[*]}
+echo ${arr[*]}
 
